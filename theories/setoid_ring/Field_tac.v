@@ -266,7 +266,7 @@ Ltac Field_norm_gen f n FLD lH rl :=
   ReflexiveRewriteTactic mkFFV mkFE lemma_tac main_tac fv0 rl;
   try simpl_PCond FLD.
 
-Ltac rewrites_aux norm_fun H term finish_tac :=
+Ltac one_of_rewrites norm_fun H term finish_tac :=
   match type of H with
   | forall _, ?val = _ -> _ =>
     let nfe := eval vm_compute in val in
@@ -297,7 +297,7 @@ let RW_tac lemma :=
     let fe := SYN_tac term fv in
     let lemma1 := fresh "lemma_instantiated_on_fexpr" in
      (assert (lemma1 := lemma fe) || fail 1000 "failed to instantiate lemma")
-    ; rewrites_aux norm_fun lemma1 term finish_tac;[CONT_tac () | .. ]
+    ; one_of_rewrites norm_fun lemma1 term finish_tac;[CONT_tac () | .. ]
     in
     lazy_list_fold_right fcons ltac:(fun _=> idtac) terms
      in
