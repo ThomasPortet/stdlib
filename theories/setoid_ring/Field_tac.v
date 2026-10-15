@@ -311,7 +311,8 @@ Ltac Field_norm_gen_gcd norm_fun lemma finish_tac f n FLD rl_fngcd :=
     let lem := fresh "f_rw_lemma" in
     (assert (lem := lemma n (@nil (PExpr _ * PExpr _)) fv I (@nil _) eq_refl);
      kont lem; clear lem) in
-    rewrites R mkFFV mkFE norm_fun lemma_tac finish_tac rl_fngcd.
+    rewrites R mkFFV mkFE norm_fun lemma_tac finish_tac rl_fngcd;
+    try simpl_PCond FLD.
 
 (* This is duplicated from Ring_tac mutatis mutandi. but the simplification
   lemma is computed in Field_norm_gen, while the ring infrastructure does
